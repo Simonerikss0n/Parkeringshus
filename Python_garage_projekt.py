@@ -1,4 +1,4 @@
-
+import time
 
 def menu(title, prompt, options):
     print(f"{title}\n")
@@ -50,6 +50,7 @@ def main():
     users = {}
     user_data = {}
     cars = {}
+    in_tid = None
 
     while True:
         choice_menu = menu("Welcome to the garage", "Option: ", {"l":"Log in", "c":"Create new user", "q":"Quit"})
@@ -58,9 +59,27 @@ def main():
             second_choice = menu(f"Welcome {users[login_choice]}", "Option: ", {"d":"Drive in", "c":"Check time", "l":"Log out"})
             if second_choice == "d":
                 register_car(users, cars, login_choice)
+                if register_car is True:
+                    in_tid = time.time()
+            elif second_choice == "c":
+                if in_tid is False:
+                    print("You have not driven in yet")
+
+                else:
+                    nuvarande_tid = time.time()
+                    parkerad_tid =in_tid - nuvarande_tid
+                    print(parkerad_tid)
+        
+        elif choice_menu == "do":
+            ut_tid = time.time()
+            total_tid = in_tid - ut_tid
+            print(total_tid)
+
         elif choice_menu == "c":
             create_new_user(users)
             print(users)
+
+            
         else:
             return
 
