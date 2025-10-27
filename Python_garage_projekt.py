@@ -25,15 +25,30 @@ def log_in(users):
                 return None
             
 
-def register_car(users, cars, logged_in_user):
+def register_car(cars, car_spot, logged_in_user):
     while True:
         if logged_in_user in cars:
             print("User has already registered a car")
-            return
-    cars[logged_in_user] = input("Register your car: ")
-    print(cars)
+            return None
+        cars[logged_in_user] = input("Register your car: ")
+        print(cars)
+        car_spot
+        choose_parking_spot(car_spot)
+        spot = input("Choose a parking spot: ")
+        car_spot[cars[logged_in_user]] = spot
+        print(car_spot)
 
 
+def choose_parking_spot(car_spot):
+    print(car_spot)
+    print("Available parking spots")
+    print()
+    for spot in car_spot:
+        if len(car_spot) > 3:
+            print(f"{car_spot[spot]} \n |*|")
+        else:
+            print(f"{car_spot[spot]} \n | |")
+    return
 
 def create_new_user(users):
     while True:
@@ -48,7 +63,7 @@ def create_new_user(users):
 
 def main():
     users = {}
-    user_data = {}
+    car_spot = {"1":"D1", "2":"D2", "3":"D3", "4":"D4", "5":"D5"}
     cars = {}
     in_tid = None
 
@@ -56,33 +71,24 @@ def main():
         choice_menu = menu("Welcome to the garage", "Option: ", {"l":"Log in", "c":"Create new user", "q":"Quit"})
         if choice_menu == "l":
             login_choice = log_in(users)
-            second_choice = menu(f"Welcome {users[login_choice]}", "Option: ", {"d":"Drive in", "c":"Check time", "l":"Log out"})
+
+            if login_choice is None:
+                continue
+
+
+
+            second_choice = menu(f"Welcome {login_choice}", "Option: ", {"d":"Drive in", "c":"Check time", "do":"Drive out", "l":"Log out"})
             if second_choice == "d":
                 register_car(users, cars, login_choice)
-                if register_car is True:
-                    in_tid = time.time()
-            elif second_choice == "c":
-                if in_tid is False:
-                    print("You have not driven in yet")
-
-                else:
-                    nuvarande_tid = time.time()
-                    parkerad_tid =in_tid - nuvarande_tid
-                    print(parkerad_tid)
-        
-        elif choice_menu == "do":
-            ut_tid = time.time()
-            total_tid = in_tid - ut_tid
-            print(total_tid)
-
         elif choice_menu == "c":
             create_new_user(users)
             print(users)
-
-            
         else:
-            return
+            continue
 
-main()
+register_car({"user1":"CarA"}, {"1":"D1", "2":"D2", "3":"D3"}, "user2")
+
+
+#main()
 
 #Yadayada
